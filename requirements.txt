@@ -1,0 +1,5 @@
+pandas
+wbdata
+beautifulsoup4
+requests
+openpyxl  # Necessário para salvar arquivos Excel com pandas
