@@ -6,9 +6,16 @@ def padronizar_colunas(df):
     colunas_limpa = [c.strip().lower().replace(" ", "_").replace("(", "").replace(")", "") for c in df.columns]
     return df.toDF(*colunas_limpa)
 
-# 🔹 Etapa 2: Verificar valores nulos por coluna
+# Verifica nulos ou NaN (onde aplicável)
 def verificar_nulos(df):
-    return df.select([count(when(col(c).isNull() | isnan(c), c)).alias(c) for c in df.columns])
+    resultado = []
+    for c in df.columns:
+        tipo = dict(df.dtypes)[c]
+        if tipo in ['double', 'float']:
+            resultado.append(count(when(isnull(col(c)) | isnan(col(c)), c)).alias(c))
+        else:
+            resultado.append(count(when(isnull(col(c)), c)).alias(c))
+    return df.select(resultado)
 
 # 🔹 Etapa 3: Conversão de tipos (exemplo: valor_total → double, data → timestamp)
 def converter_tipos(df):
