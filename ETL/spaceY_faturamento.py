@@ -7,8 +7,18 @@ from pyspark.sql.types import TimestampType
 
 # 🔹 Etapa 1: Renomear colunas para formato padrão
 def padronizar_colunas(df):
-    colunas_limpa = [str(c).strip().lower().replace(" ", "_").replace("(", "").replace(")", "") for c in df.columns]
-    return df.toDF(*colunas_limpa)
+    try:
+        colunas_originais = df.columns
+        colunas_limpa = []
+        for c in colunas_originais:
+            nome = str(c).strip().lower().replace(" ", "_").replace("(", "").replace(")", "")
+            colunas_limpa.append(nome)
+        return df.toDF(*colunas_limpa)
+    except Exception as e:
+        print("Erro ao padronizar colunas:", e)
+        print("Colunas encontradas:", df.columns)
+        raise
+
 
 # Verifica nulos ou NaN (onde aplicável)
 def verificar_nulos(df):
