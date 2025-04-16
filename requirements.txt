@@ -1,5 +1,7 @@
 pandas
 pycountry babel
+pycountry
+countryinfo
 wbdata
 beautifulsoup4
 requests
