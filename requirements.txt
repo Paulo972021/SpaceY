@@ -1,5 +1,4 @@
 pandas
-pycountry babel
 pycountry
 countryinfo
 wbdata
