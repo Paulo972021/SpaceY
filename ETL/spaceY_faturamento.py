@@ -29,17 +29,17 @@ def verificar_nulos(df):
 # 🔹 Etapa 3: Conversão de tipos (exemplo: valor_total → double, data → timestamp)
 def converter_tipos(df):
     conversoes = {
-  "tipos_de_clientes":string(),
-  "país":string(),
-  "produto":string(),
-  "valor_total":double(),
-  "desconto":double(),
-  "valor_total_c/_desconto":double(),
-  "custo_total":double(),
-  "lucro":double(),
-  "data":datetime(),
-  "mês":string(),
-  "ano":int(),
+  "tipos_de_clientes":StringType(),
+  "país":StringType(),
+  "produto":StringType(),
+  "valor_total":DoubleType(),
+  "desconto":DoubleType(),
+  "valor_total_c/_desconto":DoubleType(),
+  "custo_total":DoubleType(),
+  "lucro":DoubleType(),
+  "data":DateTime(),
+  "mês": StringType(),
+  "ano": IntegerType(),
     }
 
     for coluna, tipo in conversoes.items():
@@ -67,7 +67,7 @@ def tratar_dataframe(df):
     print("🔍 Nulos por coluna:")
     display(verificar_nulos(df))
     
-#    df = converter_tipos(df)
+    df = converter_tipos(df)
     verificar_erros(df)
     df = limpar_strings(df)
     
