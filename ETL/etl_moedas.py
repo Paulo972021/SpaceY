@@ -1,7 +1,9 @@
+from pyspark.sql.functions import udf
 from pyspark.sql.functions import isnull, isnan, col, count, when
 from pyspark.sql.types import *
 from pyspark.sql.types import StringType
 from pyspark.sql.types import TimestampType
+from babel import Locale
 
 
 
@@ -50,10 +52,12 @@ def traduzir_nome_pais(nome_ingles):
     except:
         return None
 
-# Função para aplicar em uma coluna do DataFrame
-def traduzir_coluna_paises(df, coluna_origem, nova_coluna='País (pt-BR)'):
-    df[nova_coluna] = df[coluna_origem].apply(traduzir_nome_pais)
-    return df
+# Registrar como UDF
+traduzir_nome_udf = udf(traduzir_nome_pais, StringType())
+
+# Função para aplicar a tradução no DataFrame PySpark
+def traduzir_coluna_paises(df, coluna_origem, nova_coluna='pais_ptbr'):
+    return df.withColumn(nova_coluna, traduzir_nome_udf(coluna_origem))
   
 
 # 🔹 Etapa 4: Verificar valores inconsistentes (ex: negativos onde não deveriam)
