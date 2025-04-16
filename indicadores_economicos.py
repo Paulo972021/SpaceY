@@ -49,4 +49,4 @@ for ano in anos:
         dados_anos[ano] = df_final_ano
 
 # Concatenar todos os anos
-df_final = pd.concat(dados_anos.values(), ignore_index=True)
+indicadores = pd.concat(dados_anos.values(), ignore_index=True)
