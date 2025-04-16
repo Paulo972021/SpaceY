@@ -7,7 +7,7 @@ from pyspark.sql.types import TimestampType
 
 # 🔹 Etapa 1: Renomear colunas para formato padrão
 def padronizar_colunas(df):
-    colunas_limpa = [c.strip().lower().replace(" ", "_").replace("(", "").replace(")", "") for c in df.columns]
+    colunas_limpa = [str(c).strip().lower().replace(" ", "_").replace("(", "").replace(")", "") for c in df.columns]
     return df.toDF(*colunas_limpa)
 
 # Verifica nulos ou NaN (onde aplicável)
