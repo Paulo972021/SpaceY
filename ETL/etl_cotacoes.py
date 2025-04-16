@@ -29,7 +29,7 @@ def verificar_nulos(df):
 # 🔹 Etapa 3: Conversão de tipos (exemplo: valor_total → double, data → timestamp)
 def converter_tipos(df):
     conversoes = {
-"data":StringType(),
+"data": TimestampType(),
 "base":StringType(),
 "moeda":StringType(),
 "taxa":DoubleType()
