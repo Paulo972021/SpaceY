@@ -46,13 +46,9 @@ df_datas = pd.read_excel(url_excel)
 df_datas['Data'] = pd.to_datetime(df_datas['Data']).dt.strftime('%Y-%m-%d')
 
 # Raspagem para todas as datas únicas da coluna
-resultado_final = pd.concat(
+cotacoes = pd.concat(
     [coletar_cotacoes(data) for data in df_datas['Data'].unique()],
     ignore_index=True
 )
 
-# Exibe as primeiras linhas
-print(resultado_final.head())
 
-# Salvar como Excel (opcional)
-resultado_final.to_excel("cotacoes_historicas.xlsx", index=False)
