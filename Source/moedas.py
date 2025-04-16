@@ -66,4 +66,5 @@ def nome_moeda_por_codigo(codigo):
         return None
 
 df_moedas['Moeda'] = df_moedas['Código Moeda'].apply(nome_moeda_por_codigo)
+moedas = df_moedas
 
