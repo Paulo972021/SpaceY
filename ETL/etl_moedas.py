@@ -84,5 +84,5 @@ def tratar_dataframe(df):
     df = traduzir_coluna_paises(df, 'país_en')
     verificar_erros(df)
     df = limpar_strings(df)
-    df = df.rename(columns={"país_en":"país"})
+    df = df.withColumnRenamed("país_en","país")
     return df
