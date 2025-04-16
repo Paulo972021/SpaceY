@@ -38,7 +38,7 @@ def coletar_cotacoes(data='2022-12-31', base='USD'):
     return pd.DataFrame(dados)
 
 # Leitura do arquivo Excel direto do GitHub
-url_excel = "https://raw.githubusercontent.com/Paulo972021/SpaceY/main/CASE%20-%20Base%20de%20Dados.xlsx"
+url_excel = "https://raw.githubusercontent.com/Paulo972021/SpaceY/main/Source/CASE%20-%20Base%20de%20Dados.xlsx"
 
 df_datas = pd.read_excel(url_excel)
 
