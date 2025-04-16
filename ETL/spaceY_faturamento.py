@@ -9,12 +9,18 @@ def padronizar_colunas(df):
 # Verifica nulos ou NaN (onde aplicável)
 def verificar_nulos(df):
     resultado = []
-    for c in df.columns:
-        tipo = dict(df.dtypes)[c]
-        if tipo in ['double', 'float']:
-            resultado.append(count(when(isnull(col(c)) | isnan(col(c)), c)).alias(c))
+
+    for campo in df.schema.fields:
+        nome = campo.name
+        tipo = campo.dataType
+
+        if isinstance(tipo, (DoubleType, FloatType)):
+            # Float ou Double → pode usar isnan
+            resultado.append(count(when(isnull(col(nome)) | isnan(col(nome)), nome)).alias(nome))
         else:
-            resultado.append(count(when(isnull(col(c)), c)).alias(c))
+            # Outros tipos → apenas isnull
+            resultado.append(count(when(isnull(col(nome)), nome)).alias(nome))
+
     return df.select(resultado)
 
 # 🔹 Etapa 3: Conversão de tipos (exemplo: valor_total → double, data → timestamp)
