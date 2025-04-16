@@ -1,5 +1,6 @@
 pandas
 pycountry
+babel
 countryinfo
 wbdata
 beautifulsoup4
