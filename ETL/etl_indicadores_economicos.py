@@ -47,6 +47,20 @@ def converter_tipos(df):
             df = df.withColumn(coluna, col(coluna).cast(tipo))
     return df
 
+
+# Função de tradução individual
+def traduzir_nome_pais(nome_ingles):
+    try:
+        pais = pycountry.countries.lookup(nome_ingles)
+        return locale_pt.territories.get(pais.alpha_2)
+    except:
+        return None
+
+# Função para aplicar em uma coluna do DataFrame
+def traduzir_coluna_paises(df, coluna_origem, nova_coluna='País (pt-BR)'):
+    df[nova_coluna] = df[coluna_origem].apply(traduzir_nome_pais)
+    return df
+
 # 🔹 Etapa 4: Verificar valores inconsistentes (ex: negativos onde não deveriam)
 def verificar_erros(df):
     if "valor_total" in df.columns:
@@ -68,6 +82,7 @@ def tratar_dataframe(df):
     display(verificar_nulos(df))
     
     df = converter_tipos(df)
+    df = traduzir_coluna_paises(df, 'country')
     verificar_erros(df)
     df = limpar_strings(df)
     
