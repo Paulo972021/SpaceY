@@ -47,7 +47,7 @@ df_datas['Data'] = pd.to_datetime(df_datas['Data']).dt.strftime('%Y-%m-%d')
 
 # Raspagem para todas as datas únicas da coluna
 resultado_final = pd.concat(
-    [coletar_cotacoes(data) for data in df_datas['data'].unique()],
+    [coletar_cotacoes(data) for data in df_datas['Data'].unique()],
     ignore_index=True
 )
 
