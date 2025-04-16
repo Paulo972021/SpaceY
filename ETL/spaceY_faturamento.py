@@ -1,6 +1,5 @@
 from pyspark.sql.functions import *
 from pyspark.sql.functions import col, lower, upper, trim, ltrim, rtrim, regexp_replace
-from pyspark.sql.functions import trim
 from pyspark.sql.types import *
 from pyspark.sql.types import StringType
 from pyspark.sql.types import TimestampType
@@ -69,9 +68,8 @@ def verificar_erros(df):
 
 # 🔹 Etapa 5: Padronizar strings (ex: tirar espaços e colocar minúsculas)
 def limpar_strings(df):
-    for campo in df.schema.fields:
-        if isinstance(campo.dataType, StringType):
-            df = df.withColumn(campo.name, lower(trim(col(campo.name))))
+    for c in df.columns:
+        df = df.withColumn(c, trim(regexp_replace(col(c), "\s+", " ")))
     return df
 
 # 🔹 Etapa 6: Aplicar todas as etapas
