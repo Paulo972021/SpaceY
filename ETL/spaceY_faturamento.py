@@ -67,7 +67,7 @@ def tratar_dataframe(df):
     print("🔍 Nulos por coluna:")
     display(verificar_nulos(df))
     
-    df = converter_tipos(df)
+#    df = converter_tipos(df)
     verificar_erros(df)
     df = limpar_strings(df)
     
