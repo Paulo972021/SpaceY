@@ -6,8 +6,12 @@ from pyspark.sql.types import StringType
 
 # 🔹 Etapa 1: Renomear colunas para formato padrão
 def padronizar_colunas(df):
+    if not hasattr(df, "columns"):
+        raise TypeError("❌ O objeto passado não é um DataFrame válido")
+    
     colunas_limpa = [c.strip().lower().replace(" ", "_").replace("(", "").replace(")", "") for c in df.columns]
     return df.toDF(*colunas_limpa)
+
 
 # Verifica nulos ou NaN (onde aplicável)
 def verificar_nulos(df):
