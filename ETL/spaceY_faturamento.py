@@ -38,7 +38,7 @@ def converter_tipos(df):
   "valor_total_c/_desconto":DoubleType(),
   "custo_total":DoubleType(),
   "lucro":DoubleType(),
-  "data":DateTime(),
+  "data":TimestampType(),
   "mês": StringType(),
   "ano": IntegerType(),
     }
