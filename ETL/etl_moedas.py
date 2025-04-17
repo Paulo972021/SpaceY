@@ -81,7 +81,7 @@ def tratar_dataframe(df):
     display(verificar_nulos(df))
     
     df = converter_tipos(df)
-    df = traduzir_coluna_paises(df, 'país')
+    df = traduzir_coluna_paises(df, 'país_en')
     verificar_erros(df)
     df = limpar_strings(df)
 
