@@ -56,8 +56,8 @@ def traduzir_nome_pais(nome_ingles):
 traduzir_nome_udf = udf(traduzir_nome_pais, StringType())
 
 # Função para aplicar a tradução no DataFrame PySpark
-def traduzir_coluna_paises(df, coluna_origem, nova_coluna='pais_ptbr'):
-    return df.withColumn(nova_coluna, traduzir_nome_udf(coluna_origem))
+def traduzir_coluna_paises(df, coluna_origem):
+    return df.withColumn(traduzir_nome_udf(coluna_origem))
   
 
 # 🔹 Etapa 4: Verificar valores inconsistentes (ex: negativos onde não deveriam)
@@ -81,8 +81,8 @@ def tratar_dataframe(df):
     display(verificar_nulos(df))
     
     df = converter_tipos(df)
-    df = traduzir_coluna_paises(df, 'país_en')
+    df = traduzir_coluna_paises(df, 'país')
     verificar_erros(df)
     df = limpar_strings(df)
-    df = df.withColumnRenamed("país_en","país")
+
     return df
