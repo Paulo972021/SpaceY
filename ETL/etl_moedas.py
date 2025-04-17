@@ -4,6 +4,7 @@ from pyspark.sql.types import *
 from pyspark.sql.types import StringType
 from pyspark.sql.types import TimestampType
 from babel import Locale
+import pycountry
 
 
 
@@ -44,20 +45,16 @@ def converter_tipos(df):
     return df
 
 
-# Função de tradução individual
-def traduzir_nome_pais(nome_ingles):
+locale_pt = Locale('pt')
+
+def iso_para_nome_pt(alpha2):
     try:
-        pais = pycountry.countries.lookup(nome_ingles)
-        return locale_pt.territories.get(pais.alpha_2)
+        return locale_pt.territories.get(alpha2.upper())
     except:
         return None
 
-# Registrar como UDF
-traduzir_nome_udf = udf(traduzir_nome_pais, StringType())
+iso_para_nome_udf = udf(iso_para_nome_pt, StringType())
 
-# Função para aplicar a tradução no DataFrame PySpark
-def traduzir_coluna_paises(df, coluna_origem, nova_coluna='pais_ptbr'):
-    return df.withColumn(nova_coluna, traduzir_nome_udf(coluna_origem))
   
 
 # 🔹 Etapa 4: Verificar valores inconsistentes (ex: negativos onde não deveriam)
@@ -81,7 +78,7 @@ def tratar_dataframe(df):
     display(verificar_nulos(df))
     
     df = converter_tipos(df)
-    df = traduzir_coluna_paises(df, 'país_en')
+    df = df.withColumn("pais_ptbr", iso_para_nome_udf(df["código_iso"]))
     verificar_erros(df)
     df = limpar_strings(df)
 
