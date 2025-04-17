@@ -1,4 +1,5 @@
 pandas
+tqdm
 pycountry
 babel
 countryinfo
