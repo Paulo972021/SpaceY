@@ -68,8 +68,9 @@ def verificar_erros(df):
 
 # 🔹 Etapa 5: Padronizar strings (ex: tirar espaços e colocar minúsculas)
 def limpar_strings(df):
-    for c in df.columns:
-        df = df.withColumn(c, trim(regexp_replace(col(c), "\s+", " ")))
+    for campo in df.schema.fields:
+        if isinstance(campo.dataType, StringType):
+            df = df.withColumn(campo.name, lower(trim(col(campo.name))))
     return df
 
 # 🔹 Etapa 6: Aplicar todas as etapas
